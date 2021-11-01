@@ -1,0 +1,8 @@
+.contentWrapper {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  background-color: rgba(95, 95, 95, 0.192);
+}

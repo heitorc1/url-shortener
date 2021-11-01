@@ -1,7 +1,6 @@
 import { URLModel } from "../database/model/URL";
 import { Request, response, Response } from "express";
 import shortId from "shortid";
-import { config } from "../config/Constants";
 
 export class URLController {
   public async shorten(req: Request, res: Response): Promise<void> {
@@ -15,7 +14,7 @@ export class URLController {
 
     // Criar o hash para URL
     const hash = shortId.generate();
-    const shortURL = `${config.API_URL}/${hash}`;
+    const shortURL = `${process.env.API_URL}:${process.env.API_PORT}/${hash}`;
 
     // Salvar URL no banco
     const newURL = await URLModel.create({

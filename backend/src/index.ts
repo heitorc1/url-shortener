@@ -1,15 +1,28 @@
-import { URLController } from "./controller/URLController";
-import express, { Request, Response } from "express";
+import express from "express";
+import dotenv from "dotenv";
+import path from "path";
+
 import { MongoConnection } from "./database/MongoConnection";
+
+import { router } from "./routes";
+
+import cors from "cors";
+
+dotenv.config({
+  path: path.join(__dirname, "..", "..", ".env"),
+});
 
 const api = express();
 api.use(express.json());
+api.use(cors());
 
 const database = new MongoConnection();
 database.connect();
 
-const urlController = new URLController();
-api.post("/shorten", urlController.shorten);
-api.get("/:hash", urlController.redirect);
+api.use(router);
 
-api.listen(5000, () => console.log("Express listening"));
+api.listen(process.env.API_PORT, () => {
+  console.log(
+    `Server is runnig on ${process.env.API_URL}:${process.env.API_PORT}`
+  );
+});
